@@ -1,38 +1,40 @@
 const first_name = document.querySelector('#first_name');
 const second_name = document.querySelector('#second_name');
 const form = document.querySelector('form');
-
+const result = document.querySelector('#result');
 
 form.onsubmit = (e) => {
     e.preventDefault();
     // flames(first_name.value, second_name.value);
     let flames = new Flames(first_name.value, second_name.value).compute();
-    console.log(flames);
+    // console.log(flames);
+    $('#exampleModal').modal('show');
+    result.innerHTML = flames.concat('!!!');
 };
 
-function flames(name1, name2) {
-    let arr1_1 = name1.toLowerCase().split('');
-    let arr1_2 = name1.toLowerCase().split('');
-    let arr2_1 = name2.toLowerCase().split('');
-    let arr2_2 = name2.toLowerCase().split('');
-    //["r", "i", "c", "h", "a", "r", "d"]
-    //["a", "m", "a", "k", "a"]
-    let arr_1 = [];
-    let arr_2 = [];
+// function flames(name1, name2) {
+//     let arr1_1 = name1.toLowerCase().split('');
+//     let arr1_2 = name1.toLowerCase().split('');
+//     let arr2_1 = name2.toLowerCase().split('');
+//     let arr2_2 = name2.toLowerCase().split('');
+//     //["r", "i", "c", "h", "a", "r", "d"]
+//     //["a", "m", "a", "k", "a"]
+//     let arr_1 = [];
+//     let arr_2 = [];
 
-    for (let i = 0; i < 20; i++) {
-        arr1_1 = arr1_1.filter((letterr) => letterr !== arr2_1[i]);
-    }
+//     for (let i = 0; i < 20; i++) {
+//         arr1_1 = arr1_1.filter((letterr) => letterr !== arr2_1[i]);
+//     }
 
-    for (let i = 0; i < 20; i++) {
-        arr2_2 = arr2_2.filter((letterr) => letterr !== arr1_2[i]);
-    }
+//     for (let i = 0; i < 20; i++) {
+//         arr2_2 = arr2_2.filter((letterr) => letterr !== arr1_2[i]);
+//     }
 
-    console.log(arr1_1);
-    console.log(arr2_2);
+//     console.log(arr1_1);
+//     console.log(arr2_2);
 
-    console.log('arr_1', arr_1);
-}
+//     console.log('arr_1', arr_1);
+// }
 
 class Flames {
     constructor(x, y) {
