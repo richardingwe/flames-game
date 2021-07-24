@@ -13,7 +13,8 @@ form.onsubmit = (e) => {
     db.collection('flames').add({
         first_name: first_name.value.toLowerCase(),
         second_name: second_name.value.toLowerCase(),
-        result: flames
+        result: flames,
+        time: (new Date(Date.now())).toString()
     });
 };
 

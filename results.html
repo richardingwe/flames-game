@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>results</title>
+		<link
+			rel="stylesheet"
+			href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+			integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+			crossorigin="anonymous"
+		/>
+		<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
+	</head>
+	<body>
+		<div class="container my-5">
+			<h2>Results</h2>
+			<table class="table table-dark">
+				<thead>
+					<tr>
+						<th scope="col">First Name</th>
+						<th scope="col">Second Name</th>
+						<th scope="col">Results</th>
+						<th scope="col">Time</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+	</body>
+	<script>
+		// Your web app's Firebase configuration
+		var firebaseConfig = {
+			apiKey: 'AIzaSyCL9RYXBrdVyjqQ2kAqjpdq8ImDvtcyxeE',
+			authDomain: 'flames-fd0df.firebaseapp.com',
+			databaseURL: 'https://flames-fd0df-default-rtdb.firebaseio.com',
+			projectId: 'flames-fd0df',
+			storageBucket: 'flames-fd0df.appspot.com',
+			messagingSenderId: '353489248717',
+			appId: '1:353489248717:web:f9f4ed0bbabc732956e484',
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		const db = firebase.firestore();
+		// db.settings({ timestampsInSnapshots: true });
+
+		const table = document.querySelector('table tbody');
+
+		db.collection('flames')
+			.get()
+			.then((docs) => {
+				docs.forEach((doc) => {
+					table.innerHTML += `<tr>
+						<td>${doc.data().first_name}</td>
+						<td>${doc.data().second_name}</td>
+						<td>${doc.data().result}</td>
+						<td>${doc.data().time}</td>
+					</tr>`;
+				});
+			});
+	</script>
+</html>
