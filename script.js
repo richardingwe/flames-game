@@ -10,6 +10,11 @@ form.onsubmit = (e) => {
     // console.log(flames);
     $('#exampleModal').modal('show');
     result.innerHTML = flames.concat('!!!');
+    db.collection('flames').add({
+        first_name: first_name.value.toLowerCase(),
+        second_name: second_name.value.toLowerCase(),
+        result: flames
+    });
 };
 
 // function flames(name1, name2) {
