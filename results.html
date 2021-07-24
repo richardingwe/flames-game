@@ -20,6 +20,7 @@
 			<table class="table table-dark">
 				<thead>
 					<tr>
+						<th scope="col">#</th>
 						<th scope="col">First Name</th>
 						<th scope="col">Second Name</th>
 						<th scope="col">Results</th>
@@ -44,21 +45,45 @@
 		// Initialize Firebase
 		firebase.initializeApp(firebaseConfig);
 		const db = firebase.firestore();
-		// db.settings({ timestampsInSnapshots: true });
+		db.settings({ timestampsInSnapshots: true, merge: true });
 
 		const table = document.querySelector('table tbody');
+		const results = [];
 
 		db.collection('flames')
 			.get()
 			.then((docs) => {
 				docs.forEach((doc) => {
+					results.push(doc.data());
+				});
+				results.sort(
+					(a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+				);
+				results.forEach((result, i) => {
 					table.innerHTML += `<tr>
-						<td>${doc.data().first_name}</td>
-						<td>${doc.data().second_name}</td>
-						<td>${doc.data().result}</td>
-						<td>${doc.data().time}</td>
+						<td>${results.length - i}</td>
+						<td>${result.first_name}</td>
+						<td>${result.second_name}</td>
+						<td>${result.result}</td>
+						<td>${new Date(result.time).toLocaleDateString('en-US')}, ${getTime(
+						result.time
+					)}</td>
 					</tr>`;
 				});
 			});
+
+		function getTime(time) {
+			let hours, timeOfTheDay;
+			let minutes = new Date(time).getMinutes();
+			if (minutes < 9) minutes = '0'.concat(minutes);
+			if (new Date(time).getHours() > 12) {
+				hours = new Date(time).getHours() - 12;
+				timeOfTheDay = 'pm';
+			} else {
+				hours = new Date(time).getHours();
+				timeOfTheDay = `am`;
+			}
+			return `${hours}:${minutes}${timeOfTheDay}`;
+		}
 	</script>
 </html>
